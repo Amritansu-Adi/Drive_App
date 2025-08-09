@@ -5,6 +5,7 @@ import Image from './Image';
 import CreateFolderModal from '../Modals/CreateFolderModal';
 import UploadImageModal from '../Modals/UploadImageModal';
 import ImageViewerModal from '../Modals/ImageViewerModal';
+import Loading from '../Loading/Loading';
 import './FileManager.css';
 // import { toast } from 'react-toastify';
 
@@ -18,6 +19,7 @@ const FileManager = ({ token, setToken }) => {
     const [showUploadImageModal, setShowUploadImageModal] = useState(false);
     const [searchResults, setSearchResults] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const [viewingImage, setViewingImage] = useState(null);
     // const [loading, setLoading] = useState(false);
@@ -54,7 +56,7 @@ const FileManager = ({ token, setToken }) => {
     };
 
     const fetchData = async (folderId) => {
-        // setLoading(true);
+        setLoading(true);
         try {
             const { data } = await axiosInstance.get(`/folders?parent=${folderId || 'null'}`);
             setFolders(data.folders);
@@ -66,10 +68,9 @@ const FileManager = ({ token, setToken }) => {
             console.error('Error fetching data', error);
             // setError('Failed to load data');
             // toast.error('Failed to load folders and images');
+        } finally {
+            setLoading(false);
         }
-        // finally {
-        //     setLoading(false);
-        // }
     };
 
     useEffect(() => {
@@ -93,6 +94,7 @@ const FileManager = ({ token, setToken }) => {
         const newCurrentFolderId = newPath[newPath.length - 1]._id;
         setPath(newPath);
         setCurrentFolder(newCurrentFolderId);
+        setLoading(true);
         fetchData(newCurrentFolderId);
         // setSearchResults(null);
     };
@@ -187,7 +189,9 @@ const FileManager = ({ token, setToken }) => {
                 <div className="content-section">
                     <h3 className="section-title">Folders</h3>
                     <div className="content-grid">
-                        {searchResults ? (
+                        {loading ? (
+                            <Loading message="Loading directory..." />
+                        ) : searchResults ? (
                             <>
                                 <div className="search-results">
                                     <h3 className="search-header">Search Results for "{searchQuery}"</h3>
