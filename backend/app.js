@@ -17,8 +17,6 @@ app.use(cors({
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
-    preflightContinue: false,
-    optionsSuccessStatus: 204
 }));
 // app.use(cors());
 app.use(express.json());
