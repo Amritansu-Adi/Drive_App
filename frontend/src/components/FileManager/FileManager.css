@@ -43,6 +43,24 @@
   gap: 15px;
 }
 
+@media (max-width: 480px) {
+  .action-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .search-section {
+    max-width: 100%;
+    width: 100%;
+  }
+  .search-input {
+    width: 100%;
+  }
+  .logout-btn {
+    width: 100%;
+  }
+}
+
 
 .search-section {
   display: flex;
