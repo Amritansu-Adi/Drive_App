@@ -10,7 +10,7 @@ const app = express();
 
 // CORS configuration for custom domain and localhost
 app.use(cors({
-    origin: ["https://drive-app-1.onrender.com", "http://localhost:5173"],
+    origin: ["https://drive-app-1.onrender.com"],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
